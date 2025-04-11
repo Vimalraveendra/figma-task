@@ -12,6 +12,7 @@ const sideMenuContainerEle = document.querySelector(".side-menu-container");
 const menuIconEle = document.querySelector(".menu-icon");
 const closeIconEle = document.querySelector(".side-menu-container .close-icon");
 const overlayEle = document.querySelector(".overlay");
+const popupContainerEl = document.querySelector(".popup-container");
 
 const SLIDER_DATA = [
   {
@@ -148,6 +149,24 @@ const lazyLoadingImage = (entries, observer) => {
 const lazyLoadingObserver = new IntersectionObserver(lazyLoadingImage, {
   threshold: 0.9,
 });
+const closeProductWindow = () => {
+  popupContainerEl.classList.remove("show");
+};
+
+const renderProductWindow = (product) => {
+  // clearing the  container before adding
+  popupContainerEl.innerHTML = "";
+
+  const popupDiv = document.createElement("div");
+  popupDiv.classList.add("popup");
+  popupDiv.innerHTML = `
+    <span>ID:${product.id < 10 ? `0` + product.id : product.id}</span>
+     <img src=${product.image} alt=${product.text} >
+       <button id="close" onclick=closeProductWindow()> &#10006;</button>
+       `;
+  popupContainerEl.classList.add("show");
+  popupContainerEl.appendChild(popupDiv);
+};
 
 const addProduct = (product) => {
   const productCardDiv = document.createElement("div");
@@ -166,6 +185,9 @@ const addProduct = (product) => {
      <img data-src=${product.image} alt=${product.text} class="lazy-loading">
       `;
 
+  productCardDiv.addEventListener("click", () => {
+    renderProductWindow(product);
+  });
   productsListEle.appendChild(productCardDiv);
 };
 
