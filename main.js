@@ -13,6 +13,10 @@ const menuIconEle = document.querySelector(".menu-icon");
 const closeIconEle = document.querySelector(".side-menu-container .close-icon");
 const overlayEle = document.querySelector(".overlay");
 const popupContainerEl = document.querySelector(".popup-container");
+const navListEle = document.querySelectorAll(".nav-list-container li");
+const sideListEle = document.querySelectorAll(".side-menu-list li");
+const sliderButtonEle = document.querySelector(".slider-arrow");
+const progressBarEle = document.querySelector(".progress-bar");
 
 const SLIDER_DATA = [
   {
@@ -59,6 +63,7 @@ const SLIDER_DATA = [
   },
 ];
 
+// swiper js
 const swiper = new Swiper(".swiper", {
   // Navigation arrows
   navigation: {
@@ -91,15 +96,22 @@ const swiper = new Swiper(".swiper", {
   },
 });
 
+// product slider
 const addSliderProduct = (product) => {
   const swiperSliderEle = document.createElement("Div");
   swiperSliderEle.classList.add("swiper-slide");
   swiperSliderEle.innerHTML = `
                             <div class="product-body">
-                              <h4 class="best-seller">${product.type}</h4>
+                              <h4 class=${
+                                product.type === "Bestseller"
+                                  ? "best-seller"
+                                  : "limited-edition"
+                              }>${product.type}</h4>
                               <img src="/images/Default.svg" alt="favourite" class="fav-icon" loading="lazy" >
                               <div class="image-container">
-                                  <img src=${product.image} alt=${product.name} class="slider-image" loading="lazy" >
+                                  <img src=${product.image} alt=${
+    product.name
+  } class="slider-image" loading="lazy" >
                               </div>
                           </div>
                           <div class="product-details">
@@ -133,12 +145,13 @@ const getProductsList = async (pageSize = 14) => {
 };
 getProductsList();
 
+// image lazy loading
 const lazyLoadingImage = (entries, observer) => {
   entries.forEach((entry) => {
     if (!entry.isIntersecting) return;
     setTimeout(() => {
       entry.target.src = entry.target.dataset.src;
-    }, 1000);
+    }, 500);
 
     entry.target.addEventListener("load", () => {
       entry.target.classList.remove("lazy-loading");
@@ -149,6 +162,7 @@ const lazyLoadingImage = (entries, observer) => {
 const lazyLoadingObserver = new IntersectionObserver(lazyLoadingImage, {
   threshold: 0.9,
 });
+//product popup window
 const closeProductWindow = () => {
   popupContainerEl.classList.remove("show");
 };
@@ -168,6 +182,7 @@ const renderProductWindow = (product) => {
   popupContainerEl.appendChild(popupDiv);
 };
 
+// products list
 const addProduct = (product) => {
   const productCardDiv = document.createElement("div");
   const productBannerDiv = document.createElement("div");
@@ -201,6 +216,7 @@ const renderProductsList = (productsList) => {
   imgElements.forEach((img) => lazyLoadingObserver.observe(img));
 };
 
+// product dropdown number
 numberDropdownIconEle.addEventListener("click", () => {
   if (paginationListContainerEle.className === "pagination-container") {
     paginationListContainerEle.classList.add("display");
@@ -209,17 +225,73 @@ numberDropdownIconEle.addEventListener("click", () => {
   }
 });
 
-paginationListEle.forEach((list) => {
-  list.addEventListener("click", () => {
-    dropdownNumberEle.textContent = list.textContent;
-    const current = document.querySelector(".pagination-list-active");
-    current.classList.remove("pagination-list-active");
-    paginationListContainerEle.classList.remove("display");
-    getProductsList(list.textContent);
-    list.classList.add("pagination-list-active");
+//nav list element active
+const toggleActiveClass = (list, idx, activeClassName) => {
+  return list.addEventListener("click", () => {
+    const current = document.querySelector(` .${activeClassName}`);
+    current.classList.remove(activeClassName);
+
+    if (idx === 0 ? idx + 1 : idx) {
+      navListEle[idx].classList.add(activeClassName);
+    } else if (activeClassName === "pagination-list-active") {
+      if (dropdownNumberEle.textContent !== list.textContent) {
+        getProductsList(list.textContent);
+      }
+      dropdownNumberEle.textContent = list.textContent;
+      paginationListContainerEle.classList.remove("display");
+      list.classList.add(activeClassName);
+    } else {
+      list.classList.add(activeClassName);
+    }
   });
+};
+navListEle.forEach((list) => {
+  toggleActiveClass(list, "", "active");
 });
 
+sideListEle.forEach((list, idx) => {
+  toggleActiveClass(list, idx, "active");
+});
+paginationListEle.forEach((list) => {
+  toggleActiveClass(list, "", "pagination-list-active");
+});
+
+// progress bar width change
+let counter = 0;
+let progress = 0;
+const updateProgressBar = () => {
+  let imageCount = 4;
+  const wrapperEle = document.querySelector(".wrapper").clientWidth;
+  if (wrapperEle >= 1660) {
+    progress += 25;
+  } else if (wrapperEle >= 1100) {
+    imageCount = 3;
+    progress += 30;
+  } else if (wrapperEle >= 600) {
+    imageCount = 2;
+    progress += 50;
+  } else {
+    imageCount = 1;
+    progress += 100;
+  }
+  if (counter > imageCount) {
+    counter = 0;
+    progress = 0;
+    progressBarEle.style.width = `0%`;
+  }
+  progressBarEle.style.width = `${progress}%`;
+};
+sliderButtonEle.addEventListener("click", () => {
+  if (counter <= 4) {
+    counter++;
+    updateProgressBar(progress);
+  } else {
+    counter = 0;
+    progress = 0;
+  }
+});
+
+// side bar menu
 const closeSideBar = (e) => {
   if (
     sideMenuContainerEle.contains(e.target) ||
