@@ -1,4 +1,7 @@
 const swiperWrapperEle = document.querySelector(".swiper-wrapper");
+const paginationListEle = document.querySelectorAll(".pagination-container li");
+const dropdownNumberEle = document.querySelector(".number");
+const productsListEle = document.querySelector(".products-list");
 
 const SLIDER_DATA = [
   {
@@ -104,3 +107,65 @@ const renderSliderProducts = () => {
 };
 
 renderSliderProducts();
+
+// onload getting data
+const getProductsList = async (pageSize = 14) => {
+  try {
+    let response = await fetch(
+      `https://brandstestowy.smallhost.pl/api/random?pageNumber=1&pageSize=${pageSize}`
+    );
+    let data = await response.json();
+    console.log("data", data.data);
+    renderProductsList(data.data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+getProductsList();
+
+const lazyLoadingImage = (entries, observer) => {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+    setTimeout(() => {
+      entry.target.src = entry.target.dataset.src;
+    }, 1000);
+
+    entry.target.addEventListener("load", () => {
+      entry.target.classList.remove("lazy-loading");
+      observer.unobserve(entry.target);
+    });
+  });
+};
+const lazyLoadingObserver = new IntersectionObserver(lazyLoadingImage, {
+  threshold: 0.9,
+});
+
+const addProduct = (product) => {
+  const productCardDiv = document.createElement("div");
+  const productBannerDiv = document.createElement("div");
+  productCardDiv.classList.add("list-product");
+  productBannerDiv.classList.add("banner");
+  if (product.id === 6) {
+    productBannerDiv.innerHTML = `
+       <img data-src="images/BANNER.png" alt="banner" class="lazy-loading">
+        `;
+    productsListEle.appendChild(productBannerDiv);
+  }
+
+  productCardDiv.innerHTML = `
+      <span>ID:${product.id < 10 ? `0` + product.id : product.id}</span>
+     <img data-src=${product.image} alt=${product.text} class="lazy-loading">
+      `;
+
+  productsListEle.appendChild(productCardDiv);
+};
+
+const renderProductsList = (productsList) => {
+  // clearing the  container before adding
+  productsListEle.innerHTML = "";
+  productsList.map((product, idx) => {
+    addProduct(product);
+  });
+  const imgElements = document.querySelectorAll("img[data-src]");
+  imgElements.forEach((img) => lazyLoadingObserver.observe(img));
+};
