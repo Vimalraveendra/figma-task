@@ -64,6 +64,11 @@
  ul li a{
     text-decoration: none;
     color:var(--primary-black);
+    cursor: pointer;
+  }
+  ul li a:hover{
+    opacity: 0.8;
+    background-color: var(--primary-grey);
   }
   
   .overlay{
@@ -314,7 +319,7 @@
   height: 1px;;
   margin-top:var( --spacing-extra-large);
 }
-.slider-nav .progress-bar{
+.progress-bar{
   width: 0%;
    height: 1px;
    background-color:var(--primary-black)
@@ -449,10 +454,9 @@
   min-height: 441px;
 
 }
- .pagination-list-active a{
+.active a, .pagination-list-active a, .side-list-active a{
   border-bottom: 1px solid #000000;
 }
-
 /* popup container */
 .popup-container{
   position: fixed;
