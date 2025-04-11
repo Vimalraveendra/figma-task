@@ -129,3 +129,127 @@
   height: 732px;
   
   }
+
+
+  /* products swiper section */
+.products-section .wrapper{
+  padding:96px 0px;
+  gap: 42px;
+ 
+}
+
+.products-section  .products-title{
+  height: 78px;;
+}
+.products-section .products-title p{
+  margin: 0;
+  height: 24px;
+  text-transform: uppercase;
+}
+.products-section .products-title h2{
+  font-weight: var(--font-bold);
+  font-size: var(--font-size-large);
+ margin:0px;
+ height: 50px;
+ margin-top:4px;
+}
+
+.products-section .swiper{
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.products-slider .products{
+  display: flex;
+}
+ .swiper-slide{
+  overflow: hidden;
+  opacity: 1;
+  cursor: pointer;
+
+ }
+ .products .product:hover{
+  opacity: 0.2;
+}
+.product-body{
+  height: 441px;
+  background-color: var(--primary-grey);
+  border-radius:6px;
+}
+.product-body   h4{
+  display: none;
+  position: absolute;
+ padding:4px 12px 4px 12px;
+ border-radius: 1000px;
+ margin:16px 0px 0px 16px;
+ text-transform: uppercase;
+ font-weight: var(--font-medium);
+}
+.product-body .best-seller{
+  display: block;
+  background-color: var(--label-best-seller);
+}
+.product-body .limited-edition{
+  display: block;
+  background-color: var(--label-limited-edition);
+}
+.product-body  .fav-icon{
+  position: absolute;
+  right: 0;
+  margin:16px 16px 0px 0px;
+}
+.product-body .image-container{
+  width:100%;
+  height: 100%;
+}
+.product-body .slider-image{
+  object-fit: cover;
+  padding: 30px 30px 31px 31px;
+  width:100%;
+  height: 100%;
+}
+
+.product-details{
+  margin-top:24px;
+}
+.product-details h3{
+  margin:0;
+  padding:0px 12px;
+  font-weight: var(--font-semi-bold);
+  font-size: var(--font-size-medium);
+}
+.product-details p{
+  margin:0;
+  padding:0px 12px;
+  margin-top: 12px;
+}
+.slider-nav{
+  border: 1px solid var(--primary-grey);
+  height: 1px;;
+  margin-top:64px;
+}
+.slider-nav .progress-bar{
+  width: 0%;
+   height: 1px;
+   background-color:var(--primary-black)
+}
+.products-section .slider-arrow{
+   width: 72px;
+   height: 72px;
+   border-radius: 1000px;
+   background-color:var(--primary-white);
+   border: 1px solid var(--primary-grey);
+   position: absolute;
+   top:216px;
+   right:32px ;
+   cursor: pointer;
+
+}
+
+.products .slider-arrow img{
+  width: 24px;
+  height: 24px;
+}
+.swiper-button-next::after{
+  content: none !important;
+}
