@@ -1,3 +1,4 @@
+const bodyEle = document.querySelector("body");
 const swiperWrapperEle = document.querySelector(".swiper-wrapper");
 const paginationListContainerEle = document.querySelector(
   ".pagination-container"
@@ -6,6 +7,11 @@ const paginationListEle = document.querySelectorAll(".pagination-container li");
 const dropdownNumberEle = document.querySelector(".number");
 const numberDropdownIconEle = document.querySelector(".dropdown-icon");
 const productsListEle = document.querySelector(".products-list");
+
+const sideMenuContainerEle = document.querySelector(".side-menu-container");
+const menuIconEle = document.querySelector(".menu-icon");
+const closeIconEle = document.querySelector(".side-menu-container .close-icon");
+const overlayEle = document.querySelector(".overlay");
 
 const SLIDER_DATA = [
   {
@@ -191,3 +197,20 @@ paginationListEle.forEach((list) => {
     list.classList.add("pagination-list-active");
   });
 });
+
+const closeSideBar = (e) => {
+  if (
+    sideMenuContainerEle.contains(e.target) ||
+    overlayEle.contains(e.target)
+  ) {
+    sideMenuContainerEle.classList.remove("display");
+    setTimeout(() => overlayEle.classList.remove("enabled"), 500);
+  }
+};
+menuIconEle.addEventListener("click", () => {
+  sideMenuContainerEle.classList.add("display");
+  setTimeout(() => overlayEle.classList.add("enabled"), 500);
+});
+
+closeIconEle.addEventListener("click", closeSideBar);
+bodyEle.addEventListener("click", closeSideBar);
