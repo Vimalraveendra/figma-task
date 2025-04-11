@@ -151,7 +151,7 @@ const lazyLoadingImage = (entries, observer) => {
     if (!entry.isIntersecting) return;
     setTimeout(() => {
       entry.target.src = entry.target.dataset.src;
-    }, 1000);
+    }, 500);
 
     entry.target.addEventListener("load", () => {
       entry.target.classList.remove("lazy-loading");
