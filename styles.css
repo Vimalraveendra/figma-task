@@ -299,7 +299,14 @@
   opacity: 0;
   pointer-events: none;
 }
-
+.pagination-container.display{
+  right: 0;
+  opacity: 1;
+  pointer-events: fill;
+  background-color:var(--primary-white);
+  border:1px solid #EAEAE8;
+  border-radius: 6px;
+}
 
 .product-list-section .pagination ul li{
   margin-top: var(--spacing-triple-small); 
@@ -368,4 +375,7 @@
   filter: blur(10px); 
   min-height: 441px;
 
+}
+ .pagination-list-active a{
+  border-bottom: 1px solid #000000;
 }

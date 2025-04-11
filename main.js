@@ -1,6 +1,10 @@
 const swiperWrapperEle = document.querySelector(".swiper-wrapper");
+const paginationListContainerEle = document.querySelector(
+  ".pagination-container"
+);
 const paginationListEle = document.querySelectorAll(".pagination-container li");
 const dropdownNumberEle = document.querySelector(".number");
+const numberDropdownIconEle = document.querySelector(".dropdown-icon");
 const productsListEle = document.querySelector(".products-list");
 
 const SLIDER_DATA = [
@@ -115,7 +119,6 @@ const getProductsList = async (pageSize = 14) => {
       `https://brandstestowy.smallhost.pl/api/random?pageNumber=1&pageSize=${pageSize}`
     );
     let data = await response.json();
-    console.log("data", data.data);
     renderProductsList(data.data);
   } catch (err) {
     console.log(err);
@@ -169,3 +172,22 @@ const renderProductsList = (productsList) => {
   const imgElements = document.querySelectorAll("img[data-src]");
   imgElements.forEach((img) => lazyLoadingObserver.observe(img));
 };
+
+numberDropdownIconEle.addEventListener("click", () => {
+  if (paginationListContainerEle.className === "pagination-container") {
+    paginationListContainerEle.classList.add("display");
+  } else {
+    paginationListContainerEle.classList.remove("display");
+  }
+});
+
+paginationListEle.forEach((list) => {
+  list.addEventListener("click", () => {
+    dropdownNumberEle.textContent = list.textContent;
+    const current = document.querySelector(".pagination-list-active");
+    current.classList.remove("pagination-list-active");
+    paginationListContainerEle.classList.remove("display");
+    getProductsList(list.textContent);
+    list.classList.add("pagination-list-active");
+  });
+});
