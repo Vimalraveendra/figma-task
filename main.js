@@ -22,42 +22,42 @@ const SLIDER_DATA = [
   {
     id: 1000,
     type: "Bestseller",
-    image: "/images/product_photo_01.png",
+    image: "images/product_photo_01.png",
     name: "Dark blue alpine climbing jacket",
     price: "€300,00 EUR ",
   },
   {
     id: 1001,
     type: "Limited Edition",
-    image: "/images/product_photo_02.png",
+    image: "images/product_photo_02.png",
     name: "Orange helmet for alpine TOUNDRA",
     price: "€300,00 EUR ",
   },
   {
     id: 1002,
     type: "Bestseller",
-    image: "/images/product_photo_03.png",
+    image: "images/product_photo_03.png",
     name: "Grey alpine climbing jacket",
     price: "€300,00 EUR ",
   },
   {
     id: 1003,
     type: "Bestseller",
-    image: "/images/product_photo_01.png",
+    image: "images/product_photo_01.png",
     name: "Dark blue alpine climbing jacket",
     price: "€300,00 EUR ",
   },
   {
     id: 1004,
     type: "Bestseller",
-    image: "/images/product_photo_02.png",
+    image: "images/product_photo_02.png",
     name: "Dark blue alpine climbing jacket",
     price: "€300,00 EUR ",
   },
   {
     id: 1005,
     type: "Limited Edition",
-    image: "/images/product_photo_01.png",
+    image: "images/product_photo_01.png",
     name: "Dark blue alpine climbing jacket",
     price: "€300,00 EUR ",
   },
@@ -107,7 +107,7 @@ const addSliderProduct = (product) => {
                                   ? "best-seller"
                                   : "limited-edition"
                               }>${product.type}</h4>
-                              <img src="/images/Default.svg" alt="favourite" class="fav-icon" loading="lazy" >
+                              <img src="images/Default.svg" alt="favourite" class="fav-icon" loading="lazy" >
                               <div class="image-container">
                                   <img src=${product.image} alt=${
     product.name
