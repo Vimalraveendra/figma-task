@@ -1,4 +1,5 @@
 const bodyEle = document.querySelector("body");
+console.log("boud", bodyEle);
 const swiperWrapperEle = document.querySelector(".swiper-wrapper");
 const paginationListContainerEle = document.querySelector(
   ".pagination-container"
@@ -70,14 +71,20 @@ const swiper = new Swiper(".swiper", {
     nextEl: ".swiper-button-next",
     disabledClass: "swiper-button-disabled",
   },
-  loop: true,
+  pagination: {
+    el: ".swiper-pagination",
+    type: "progressbar",
+  },
   slidesPerView: 4,
   spaceBetween: 24,
+  observer: true,
+  observeParents: true,
+  loop: true,
 
   breakpoints: {
     // when window width is >= 300px
     200: {
-      slidesPerView: 1,
+      slidesPerView: 1.2,
       spaceBetween: 12,
     },
     650: {
@@ -98,7 +105,7 @@ const swiper = new Swiper(".swiper", {
 
 // product slider
 const addSliderProduct = (product) => {
-  const swiperSliderEle = document.createElement("Div");
+  const swiperSliderEle = document.createElement("div");
   swiperSliderEle.classList.add("swiper-slide");
   swiperSliderEle.innerHTML = `
                             <div class="product-body">
@@ -149,9 +156,7 @@ getProductsList();
 const lazyLoadingImage = (entries, observer) => {
   entries.forEach((entry) => {
     if (!entry.isIntersecting) return;
-    setTimeout(() => {
-      entry.target.src = entry.target.dataset.src;
-    }, 1000);
+    entry.target.src = entry.target.dataset.src;
 
     entry.target.addEventListener("load", () => {
       entry.target.style.opacity = 1;
