@@ -506,6 +506,7 @@
     max-width: 441px;
     background-color: var(--primary-grey);
     opacity:0;
+    visibility: hidden;
     z-index:300;
     border-radius: var(--spacing-triple-small);
 
@@ -521,6 +522,7 @@
 
 .show{
   opacity:1;
+  visibility: visible;
 }
 
 .popup #close {
