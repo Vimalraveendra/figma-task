@@ -1,5 +1,4 @@
 const bodyEle = document.querySelector("body");
-console.log("boud", bodyEle);
 const swiperWrapperEle = document.querySelector(".swiper-wrapper");
 const paginationListContainerEle = document.querySelector(
   ".pagination-container"
