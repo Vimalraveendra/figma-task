@@ -304,11 +304,13 @@ const closeSideBar = (e) => {
     overlayEle.contains(e.target)
   ) {
     sideMenuContainerEle.classList.remove("display");
+    bodyEle.style.overflow = "visible";
     setTimeout(() => overlayEle.classList.remove("enabled"), 500);
   }
 };
 menuIconEle.addEventListener("click", () => {
   sideMenuContainerEle.classList.add("display");
+  bodyEle.style.overflow = "hidden";
   setTimeout(() => overlayEle.classList.add("enabled"), 500);
 });
 
