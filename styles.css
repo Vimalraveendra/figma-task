@@ -335,14 +335,7 @@
   margin-top: var( --spacing-small);
 }
 .slider-nav{
-  border: 1px solid var(--primary-grey);
-  height: 1px;;
   margin-top:var( --spacing-extra-large);
-}
-.progress-bar{
-  width: 0%;
-   height: 1px;
-   background-color:var(--primary-black)
 }
 
 .products-section .slider-arrow{
@@ -358,6 +351,11 @@
    clip-path: fill-box;
 
 }
+
+.products-section .slider-arrow:hover{
+  background-color:var(--slider-hover-white);
+  opacity: 0.98;
+}
 .products .slider-arrow img{
   width: var( --spacing-semi-medium);
   height: var( --spacing-semi-medium);
@@ -367,7 +365,17 @@
   content: none !important;
 }
 
+.swiper .swiper-pagination-progressbar-fill{
+  background-color:var(--primary-black);
+  height: 1px;
+}
+.swiper-horizontal > .swiper-pagination-progressbar,
+.swiper-pagination-progressbar.swiper-pagination-horizontal {
+  top: inherit;
+  bottom: 0;
+  height: 1px;
 
+}
 /* Product list section */
 
 

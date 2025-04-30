@@ -63,6 +63,41 @@ const SLIDER_DATA = [
   },
 ];
 
+// product slider
+const addSliderProduct = (product) => {
+  const swiperSliderEle = document.createElement("div");
+  swiperSliderEle.classList.add("swiper-slide");
+  swiperSliderEle.innerHTML = `
+                            <div class="product-body">
+                              <h4 class=${
+                                product.type === "Bestseller"
+                                  ? "best-seller"
+                                  : "limited-edition"
+                              }>${product.type}</h4>
+                              <img src="images/Default.svg" alt="favourite" class="fav-icon" loading="lazy" >
+                              <div class="image-container">
+                                  <img src=${product.image} alt=${
+    product.name
+  } class="slider-image" loading="lazy" >
+                              </div>
+                          </div>
+                          <div class="product-details">
+                              <h3>${product.name}</h3>
+                              <p>${product.price}</p>
+                          </div>`;
+  swiperWrapperEle.appendChild(swiperSliderEle);
+};
+
+const renderSliderProducts = () => {
+  // clearing the  container before adding
+  swiperWrapperEle.innerHTML = "";
+  SLIDER_DATA.forEach((data) => {
+    addSliderProduct(data);
+  });
+};
+
+renderSliderProducts();
+
 // swiper js
 const swiper = new Swiper(".swiper", {
   // Navigation arrows
@@ -101,41 +136,6 @@ const swiper = new Swiper(".swiper", {
     },
   },
 });
-
-// product slider
-const addSliderProduct = (product) => {
-  const swiperSliderEle = document.createElement("div");
-  swiperSliderEle.classList.add("swiper-slide");
-  swiperSliderEle.innerHTML = `
-                            <div class="product-body">
-                              <h4 class=${
-                                product.type === "Bestseller"
-                                  ? "best-seller"
-                                  : "limited-edition"
-                              }>${product.type}</h4>
-                              <img src="images/Default.svg" alt="favourite" class="fav-icon" loading="lazy" >
-                              <div class="image-container">
-                                  <img src=${product.image} alt=${
-    product.name
-  } class="slider-image" loading="lazy" >
-                              </div>
-                          </div>
-                          <div class="product-details">
-                              <h3>${product.name}</h3>
-                              <p>${product.price}</p>
-                          </div>`;
-  swiperWrapperEle.appendChild(swiperSliderEle);
-};
-
-const renderSliderProducts = () => {
-  // clearing the  container before adding
-  swiperWrapperEle.innerHTML = "";
-  SLIDER_DATA.forEach((data) => {
-    addSliderProduct(data);
-  });
-};
-
-renderSliderProducts();
 
 // onload getting data
 const getProductsList = async (pageSize = 14) => {
@@ -259,41 +259,6 @@ sideListEle.forEach((list, idx) => {
 });
 paginationListEle.forEach((list) => {
   toggleActiveClass(list, "", "pagination-list-active");
-});
-
-// progress bar width change
-let counter = 0;
-let progress = 0;
-const updateProgressBar = () => {
-  let imageCount = 4;
-  const wrapperEle = document.querySelector(".wrapper").clientWidth;
-  if (wrapperEle >= 1660) {
-    progress += 25;
-  } else if (wrapperEle >= 1100) {
-    imageCount = 3;
-    progress += 30;
-  } else if (wrapperEle >= 600) {
-    imageCount = 2;
-    progress += 50;
-  } else {
-    imageCount = 1;
-    progress += 100;
-  }
-  if (counter > imageCount) {
-    counter = 0;
-    progress = 0;
-    progressBarEle.style.width = `0%`;
-  }
-  progressBarEle.style.width = `${progress}%`;
-};
-sliderButtonEle.addEventListener("click", () => {
-  if (counter <= 4) {
-    counter++;
-    updateProgressBar(progress);
-  } else {
-    counter = 0;
-    progress = 0;
-  }
 });
 
 // side bar menu
