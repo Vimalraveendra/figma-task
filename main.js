@@ -109,14 +109,10 @@ const swiper = new Swiper(".swiper", {
     el: ".swiper-pagination",
     type: "progressbar",
   },
-  slidesPerView: 4,
   spaceBetween: 24,
-  observer: true,
-  observeParents: true,
   loop: true,
-
   breakpoints: {
-    // when window width is >= 300px
+    // when window width is >= 200px
     200: {
       slidesPerView: 1.2,
       spaceBetween: 12,
@@ -137,11 +133,12 @@ const swiper = new Swiper(".swiper", {
   },
 });
 
+let pageNum = 1;
 // onload getting data
-const getProductsList = async (pageSize = 14) => {
+const getProductsList = async (pageNum, pageSize = 14) => {
   try {
     let response = await fetch(
-      `https://brandstestowy.smallhost.pl/api/random?pageNumber=1&pageSize=${pageSize}`
+      `https://brandstestowy.smallhost.pl/api/random?pageNumber=${pageNum}&pageSize=${pageSize}`
     );
     let data = await response.json();
     renderProductsList(data.data);
@@ -149,7 +146,7 @@ const getProductsList = async (pageSize = 14) => {
     console.log(err);
   }
 };
-getProductsList();
+getProductsList(pageNum);
 
 // image lazy loading
 const lazyLoadingImage = (entries, observer) => {
@@ -213,7 +210,7 @@ const addProduct = (product) => {
 
 const renderProductsList = (productsList) => {
   // clearing the  container before adding
-  productsListEle.innerHTML = "";
+  // productsListEle.innerHTML = "";
   productsList.map((product, idx) => {
     addProduct(product);
   });
@@ -239,8 +236,10 @@ const toggleActiveClass = (list, idx, activeClassName) => {
     if (idx === 0 ? idx + 1 : idx) {
       navListEle[idx].classList.add(activeClassName);
     } else if (activeClassName === "pagination-list-active") {
-      if (dropdownNumberEle.textContent !== list.textContent) {
-        getProductsList(list.textContent);
+      let pageSize = 14;
+      for (let i = pageSize; i <= list.textContent; i += 10) {
+        pageNum += 1;
+        getProductsList(pageNum);
       }
       dropdownNumberEle.textContent = list.textContent;
       paginationListContainerEle.classList.remove("display");
