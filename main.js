@@ -100,7 +100,6 @@ renderSliderProducts();
 
 // swiper js
 const swiper = new Swiper(".swiper", {
-  // Navigation arrows
   navigation: {
     nextEl: ".swiper-button-next",
     disabledClass: "swiper-button-disabled",
@@ -112,7 +111,6 @@ const swiper = new Swiper(".swiper", {
   spaceBetween: 24,
   loop: true,
   breakpoints: {
-    // when window width is >= 200px
     200: {
       slidesPerView: 1.2,
       spaceBetween: 12,
@@ -121,12 +119,9 @@ const swiper = new Swiper(".swiper", {
       slidesPerView: 2,
       spaceBetween: 16,
     },
-    // when window width is >= 1100px
-
     1100: {
       slidesPerView: 3,
     },
-    // when window width is >= 1640px
     1600: {
       slidesPerView: 4,
     },
