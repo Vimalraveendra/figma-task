@@ -236,11 +236,14 @@ const toggleActiveClass = (list, idx, activeClassName) => {
     if (idx === 0 ? idx + 1 : idx) {
       navListEle[idx].classList.add(activeClassName);
     } else if (activeClassName === "pagination-list-active") {
-      let pageSize = 14;
-      for (let i = pageSize; i <= list.textContent; i += 10) {
-        pageNum += 1;
-        getProductsList(pageNum);
+      let productListItems = document.querySelectorAll(".list-product");
+      if (productListItems.length > 14) {
+        for (let i = 14; i < productListItems.length; i++) {
+          productListItems[i].remove();
+        }
       }
+      pageNum += 1;
+      getProductsList(pageNum, list.textContent);
       dropdownNumberEle.textContent = list.textContent;
       paginationListContainerEle.classList.remove("display");
       list.classList.add(activeClassName);
